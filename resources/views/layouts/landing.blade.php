@@ -1,63 +1,60 @@
+{{--
+    ====================================================================
+    LAYOUT UTAMA LANDING PAGE (template Restoran)
+    ====================================================================
+    Dipakai oleh 6 halaman:
+      home, about, service, menu, booking, team
+
+    Section / stack yang disediakan untuk view anak:
+      @section('title')    -> judul tab browser
+      @section('hero')     -> area hero di bawah navbar (header halaman)
+      @section('content')  -> isi utama halaman
+      @push('styles')      -> CSS tambahan khusus halaman
+      @push('scripts')     -> JS tambahan khusus halaman
+--}}
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
+
 <head>
-    <meta charset="utf-8">
-    <title>@yield('title', 'Restoran Kami')</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    
-    <link href="{{ asset('landing/img/favicon.ico') }}" rel="icon">
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&family=Pacifico&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="{{ asset('landing/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('landing/css/style.css') }}" rel="stylesheet">
-    @stack('styles')
+    {{-- HEAD --}}
+    @include('landing.partials.head')
 </head>
+
 <body>
     <div class="container-xxl bg-white p-0">
-        <!-- Header -->
-        <div class="container-xxl position-relative p-0">
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
-                <a href="{{ route('landing.index') }}" class="navbar-brand p-0">
-                    <h1 class="text-primary m-0"><i class="fa fa-utensils me-3"></i>Restorant</h1>
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                    <span class="fa fa-bars"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <div class="navbar-nav ms-auto py-0 pe-4">
-                        <a href="{{ route('landing.index') }}" class="nav-item nav-link">Home</a>
-                        <a href="{{ route('landing.about') }}" class="nav-item nav-link">About</a>
-                        <a href="{{ route('landing.service') }}" class="nav-item nav-link">Service</a>
-                        <a href="{{ route('landing.menu') }}" class="nav-item nav-link">Menu</a>
-                        <a href="{{ route('landing.booking') }}" class="nav-item nav-link">Booking</a>
-                        <a href="{{ route('landing.team') }}" class="nav-item nav-link">Our Team</a>
-                    </div>
-                </div>
-            </nav>
-        </div>
 
-        <!-- Main Content -->
-        <main>
-            @yield('content')
-        </main>
-
-        <!-- Footer -->
-        <div class="container-fluid bg-dark text-light footer pt-5 mt-5">
-            <div class="container py-5">
-                <div class="copyright">
-                    <div class="row">
-                        <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                            &copy; <a class="border-bottom" href="#">Restorant</a>, All Right Reserved.
-                        </div>
-                    </div>
-                </div>
+        <!-- Spinner Start -->
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
             </div>
         </div>
+        <!-- Spinner End -->
+
+        <!-- Navbar & Hero Start -->
+        <div class="container-xxl position-relative p-0">
+
+            {{-- HEADER / MENUBAR --}}
+            @include('landing.partials.navbar')
+
+            {{-- HERO: diisi tiap halaman --}}
+            @yield('hero')
+
+        </div>
+        <!-- Navbar & Hero End -->
+
+        {{-- MAIN CONTENT --}}
+        @yield('content')
+
+        {{-- FOOTER --}}
+        @include('landing.partials.footer')
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ asset('landing/js/main.js') }}"></script>
-    @stack('scripts')
+    {{-- SCRIPTS --}}
+    @include('landing.partials.scripts')
 </body>
+
 </html>
